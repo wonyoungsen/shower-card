@@ -1,10 +1,10 @@
 # Shower Card
 
-`wang_ys121` `shower card`  `NFC` `RFID`
+`wang-ys121` `shower card`  `NFC` `RFID`
 
 ## 说明
 
-> 本卡与超链接原理上是一样的，只是数据加密比较复杂，猜想了好久才找出加密机制。这里要强调一点，此卡中主钱宝是存储在后台服务器中，无法改动，副钱宝中是存在卡上，可以改动，以下操作只是操作副钱宝中，刷卡机是不联网的，具体测试使用的机制不再多说。基本原理和water-card一样，详见：[https://github.com/wang-ys121/water-card](https://github.com/wang-ys121/water-card)
+> 本卡与[water-card](https://github.com/wang-ys121/water-card)原理上是一样的，只是数据加密比较复杂，猜想了好久才找出加密机制。这里要强调一点，此卡中主钱宝是存储在后台服务器中，无法改动，副钱宝中是存在卡上，可以改动，以下操作只是操作副钱宝中，刷卡机是不联网的，具体测试使用的机制不再多说。基本原理和water-card一样，可参考：[https://github.com/wang-ys121/water-card](https://github.com/wang-ys121/water-card)
 
 ## 工具
 
@@ -18,31 +18,32 @@
 
 > 这里最大值是10000，换成十六进制，然后反写，则为10 27，之后进行校验10+27得37，然后取反C8，最后一位校验是C8-1得到C7，之后还要照应42块数据。
 > 最后一块的密钥块如下图：
-> ![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower3.png)
-> 
+
+![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower3.png)
+
 > 密钥控制块含义:
 
 ![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower2.png)
 
 > 这里可以根据A或B密钥进行读写，不在详细说明。
-> 
+
 > 方法：
 
 * 1、克隆：直接PJ读取原卡数据，dump出来一个dump文件（acr122u），然后使用克隆工具，克隆到UID白卡，即复制一张完全一样的卡。
 
- * **优点**：不用考虑密钥，简单，容易操作。
+    * **优点**：不用考虑密钥，简单，容易操作。
 
- * **缺点**：需要有UID白卡。
+    * **缺点**：需要有UID白卡。
 
-   * 注意：如果克隆时出现错误，失败，则要考虑自己的uid卡是不是真的UID。
+        * 注意：如果克隆时出现错误，失败，则要考虑自己的uid卡是不是真的UID。
 
 * 2、修改：通过工具（这里使用PCSC）,使用B密钥连入，主动式修改里面的数据，只需修改第十扇区里面的第40、42块中的禁恶数值即可。编码规则见上面说明。（最大数值为100.00）
 
- *  **优点**：无需UID白卡，可以随意更改想要禁恶。
+    *  **优点**：无需UID白卡，可以随意更改想要禁恶。
 
- *  **缺点**：需要明白密钥使用原理，修改工具的使用有点学习成本。
+    *  **缺点**：需要明白密钥使用原理，修改工具的使用有点学习成本。
 
-   * 注意：工具的使用建议在win7 32位下，其他系统可能无法正常使用。
+         * 注意：工具的使用建议在win7 32位下，其他系统可能无法正常使用。
 
 ## 后语：
 
