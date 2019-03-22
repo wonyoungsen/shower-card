@@ -1,10 +1,10 @@
 # Shower Card
 
-`wang-ys121` `shower card`  `NFC` `RFID`
+`wonyoungsen` `shower card`  `NFC` `RFID`
 
 ## 说明
 
-> 本卡与[water-card](https://github.com/wang-ys121/water-card)原理上是一样的，只是数据加密比较复杂，猜想了好久才找出加密机制。这里要强调一点，此卡中主钱宝是存储在后台服务器中，无法改动，副钱宝中是存在卡上，可以改动，以下操作只是操作副钱宝中，刷卡机是不联网的，具体测试使用的机制不再多说。基本原理和water-card一样，可参考：[https://github.com/wang-ys121/water-card](https://github.com/wang-ys121/water-card)
+> 本卡与[water-card](https://github.com/wang-ys121/water-card)原理上是一样的，只是数据加密比较复杂，猜想了好久才找出加密机制。这里要强调一点，此卡中主钱宝是存储在后台服务器中，无法改动，副钱宝中是存在卡上，可以改动，以下操作只是操作副钱宝中，刷卡机是不联网的，具体测试使用的机制不再多说。基本原理和water-card一样，可参考：[https://github.com/wonyoungsen/water-card](https://github.com/wonyoungsen/water-card)
 
 ## 工具
 
@@ -14,16 +14,16 @@
 
 > 首先说下，m1卡总共64扇区，每扇区有四块，其中第四块是密钥部分。密钥又分A密钥和B密钥，每块总共32位（16进制），前12位为A密钥，中间8位为控制字段，后12位为B密钥，中间的控制字段标志着此块数据如何读写，具体详细的介绍请自行GG。下面给出此“卡”数据部分介绍，说明下，此“卡”的数据部分是存储在10、11扇区，10扇区中是主要的数据部分，如图：
 
-![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower1.png)
+![](https://raw.githubusercontent.com/wonyoungsen/shower-card/master/shower1.png)
 
 > 这里最大值是10000，换成十六进制，然后反写，则为10 27，之后进行校验10+27得37，然后取反C8，最后一位校验是C8-1得到C7，之后还要照应42块数据。
 > 最后一块的密钥块如下图：
 
-![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower3.png)
+![](https://raw.githubusercontent.com/wonyoungsen/shower-card/master/shower3.png)
 
 > 密钥控制块含义:
 
-![](https://raw.githubusercontent.com/wang-ys121/shower-card/master/shower2.png)
+![](https://raw.githubusercontent.com/wonyoungsen/shower-card/master/shower2.png)
 
 > 这里可以根据A或B密钥进行读写，不在详细说明。
 
